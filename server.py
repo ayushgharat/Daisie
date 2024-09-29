@@ -33,7 +33,7 @@ def receive_data():
         print(alzheimers_list)        
 
         # Process the strokes data using the function in app_logic.py
-        final_df = process_strokes_data(json.dumps(alzheimers_list))
+        final_df = process_strokes_data(json.parse(alzheimers_list))
         response = run_model(final_df)
         print("Final Score")
         print(response)

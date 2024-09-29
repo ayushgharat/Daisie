@@ -18,28 +18,28 @@ def receive_data():
         # Load the JSON data into a Python list
         # data = json.loads(json_data)
 
-        # Initialize the variables to hold the desired result
-        parkinson_object = None
-        alzheimers_list = []
+        # # Initialize the variables to hold the desired result
+        # parkinson_object = None
+        # alzheimers_list = []
 
-        # Iterate through the list of objects
-        # for obj in data:
-        #     if obj.get("questionNo") == 26:
-        #         parkinson_object = obj
+        # # Iterate through the list of objects
+        # # for obj in data:
+        # #     if obj.get("questionNo") == 26:
+        # #         parkinson_object = obj
+        # #     else:
+        # #         alzheimers_list.append(obj)
+
+        # for i in range(0, len(json_data)):
+        #     if json_data[i]["questionNo"] == "26":
+        #         parkinson_object = json_data[i]
         #     else:
-        #         alzheimers_list.append(obj)
+        #         alzheimers_list.append(json_data[i])
 
-        for i in range(0, len(json_data)):
-            if json_data[i]["questionNo"] == "26":
-                parkinson_object = json_data[i]
-            else:
-                alzheimers_list.append(json_data[i])
-
-        print(parkinson_object)
-        print(alzheimers_list)        
+        # print(parkinson_object)
+        # print(alzheimers_list)        
 
         # Process the strokes data using the function in app_logic.py
-        final_df = process_strokes_data(json.dumps(alzheimers_list))
+        final_df = process_strokes_data(json_data)
         response = run_model(final_df)
         print("Final Score")
         print(response)
@@ -53,6 +53,23 @@ def receive_data():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# Define the /chat endpoint
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    
+    # Extract necessary information from the request
+    user_input = data.get('user_input')
+    chat_history = data.get('chat_history', [])
+    model_output_alz = data.get('model_output_alz')
+    model_output_park = data.get('model_output_park')
+    
+    # Call the interact_with_user function with the inputs
+    ai_response = interact_with_user(user_input, chat_history, model_output_alz, model_output_park)
+    
+    # Return the AI response
+    return jsonify({'ai_response': ai_response})
 
 
 if __name__ == '__main__':

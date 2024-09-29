@@ -1,0 +1,22 @@
+Your team has developed an iPad app designed to assist in the early detection of Alzheimer's disease through handwriting analysis. This app is based on research from the DARWIN (Diagnosis AlzheimeR WIth haNdwriting) dataset and associated study. Here are the key points:
+App Structure:
+The app implements 8 out of the 25 tasks from the original DARWIN study.
+These 8 tasks were selected based on model testing, which showed they are strong indicators of Alzheimer's disease.
+Task Categories:
+Graphic tasks: Testing elementary writing traits
+Copy tasks: Evaluating complex gesture repetition
+Memory and dictation tasks: Assessing memorized content and working memory
+Data Collection:
+Users complete the 8 selected tasks on the iPad.
+The app collects handwriting data, including movement, pressure, and timing information.
+Data Processing:
+The collected iPad data is transformed to match the format of the DARWIN dataset.
+This transformation allows the app to use a model trained on the original DARWIN data.
+Model and Prediction:
+The app uses a machine learning model trained on the DARWIN dataset.
+The transformed iPad data is fed into this model.
+The model produces a binary output: indicating whether the user is likely to have Alzheimer's disease or not.
+Purpose:
+The app aims to provide a quick, non-invasive screening tool for early Alzheimer's detection.
+It's designed to be user-friendly and accessible, leveraging common technology (iPad) for potential widespread use.
+This app represents an innovative approach to Alzheimer's screening, combining established research methodologies with modern technology to create a practical, real-world application for early disease detection.

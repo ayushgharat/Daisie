@@ -12,9 +12,27 @@ def receive_data():
     
     try:
         # Get the JSON input
-        data = request.json
+        json_data = request.json
+
+        # Load the JSON data into a Python list
+        data = json.loads(json_data)
+
+        # Initialize the variables to hold the desired result
+        parkinson_object = None
+        alzheimers_list = []
+
+        # Iterate through the list of objects
+        for obj in data:
+            if obj.get("questionNo") == 26:
+                parkinson_object = obj
+            else:
+                alzheimers_list.append(obj)
+
+        print(parkinson_object)
+        print(alzheimers_list)        
+
         # Process the strokes data using the function in app_logic.py
-        final_df = process_strokes_data(data)
+        final_df = process_strokes_data(json.dumps(alzheimers_list))
         response = run_model(final_df)
         print("Final Score")
         print(response)

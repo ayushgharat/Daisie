@@ -20,7 +20,7 @@ def receive_data():
 
         # # Initialize the variables to hold the desired result
         # parkinson_object = None
-        # alzheimers_list = []
+        alzheimers_list = []
 
         # # Iterate through the list of objects
         # # for obj in data:
@@ -29,17 +29,18 @@ def receive_data():
         # #     else:
         # #         alzheimers_list.append(obj)
 
-        # for i in range(0, len(json_data)):
-        #     if json_data[i]["questionNo"] == "26":
-        #         parkinson_object = json_data[i]
-        #     else:
-        #         alzheimers_list.append(json_data[i])
+        for i in range(0, len(json_data)):
+            if json_data[i]['questionNo'] == '26':
+                # parkinson_object = json_data[i]
+                continue
+            else:
+                alzheimers_list.append(json_data[i])
 
         # print(parkinson_object)
         # print(alzheimers_list)        
 
         # Process the strokes data using the function in app_logic.py
-        final_df = process_strokes_data(json_data)
+        final_df = process_strokes_data(alzheimers_list)
         response = run_model(final_df)
         print("Final Score")
         print(response)

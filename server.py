@@ -16,6 +16,7 @@ def receive_data():
         # Process the strokes data using the function in app_logic.py
         final_df = process_strokes_data(data)
         response = run_model(final_df)
+        print("Final Score")
         print(response)
 
 

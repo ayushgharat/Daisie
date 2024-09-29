@@ -6,7 +6,19 @@ app = Flask(__name__)
 @app.route('/process', methods=['POST'])
 def receive_data():
     data = request.json
-    print(data)
+
+    # Initialize the objects
+    parkinson = None
+    remaining_questions = []
+
+    # Iterate through the data to separate the objects
+    for item in data:
+        if item.get("questionNo") == "26":
+            parkinson = item
+        else:
+            remaining_questions.append(item)
+
+    
     return jsonify(message="Data Recieved")
 
 

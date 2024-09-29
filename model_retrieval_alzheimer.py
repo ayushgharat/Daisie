@@ -135,6 +135,6 @@ def run_model(myframe):
             #print(f"Prediction for 'tester' on Test {i+1}: {tester_prediction[0]}")
         
         combined_predictions = np.round((tester_pred[2]+tester_pred[19]+tester_pred[18]+tester_pred[12]+tester_pred[9]+tester_pred[3]+tester_pred[14]+tester_pred[13])/8)
-        print(combined_predictions)
+        return combined_predictions
         if combined_predictions == 0:
             tot += 1    # true_val.to_csv('/Users/aditya/Downloads/tester.csv', index=False)

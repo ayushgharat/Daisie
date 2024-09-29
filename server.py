@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 from data_trans import process_strokes_data
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Define an endpoint
 @app.route('/process', methods=['POST'])
@@ -22,8 +24,6 @@ def receive_data():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-
 
 
 if __name__ == '__main__':

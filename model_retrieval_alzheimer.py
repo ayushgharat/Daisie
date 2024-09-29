@@ -1,4 +1,22 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import f1_score
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+import pickle
+import os
+import getpass
+
 def run_model(myframe):
+
+    num_tests = 25
+    cols_per_test = 18
+
     df = pd.read_csv("data.csv")
     df = df.drop("ID", axis=1)
 
@@ -8,52 +26,52 @@ def run_model(myframe):
     tests = [3,4,10,13,14,15,18,23]
     model_sequence = [
         'RF', 'LR', 'LR', 'RF', 'RF', 'RF', 'LR', 'LDA', 'RF', 'RF', 'GNB', 'LR', 
-        'RF', 'RF', 'RF', 'DT', 'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'DT', 'LR', 'RF'
+        'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'RF', 'LR', 'LR', 'RF'
     ]
 
 
     df1 = pd.DataFrame()
     df2 = myframe
-    desktop_dir = '/'
-    or i in range(1,26):
-    if i in tests:
-        df1['air_time'+str(i)] = df2['air_time'+str(i)]
-        df1['disp_index'+str(i)] = df2['disp_index'+str(i)]
-        df1['gmrt_in_air'+str(i)] = df2['gmrt_in_air'+str(i)]
-        df1['gmrt_on_paper'+str(i)] = df2['gmrt_on_paper'+str(i)]
-        df1['max_x_extension'+str(i)] = df2['max_x_extension'+str(i)]
-        df1['max_y_extension'+str(i)] = df2['max_y_extension'+str(i)]
-        df1['mean_acc_in_air'+str(i)] = df2['mean_acc_in_air'+str(i)]
-        df1['mean_acc_on_paper'+str(i)] = df2['mean_acc_on_paper'+str(i)]
-        df1['mean_gmrt'+str(i)] =  df2['mean_gmrt'+str(i)]
-        df1['mean_jerk_in_air'+str(i)] = df2['mean_jerk_in_air'+str(i)]
-        df1['mean_jerk_on_paper'+str(i)] = df2['mean_jerk_on_paper'+str(i)]
-        df1['mean_speed_in_air'+str(i)] = df2['mean_speed_in_air'+str(i)]
-        df1['mean_speed_on_paper'+str(i)] = df2['mean_speed_on_paper'+str(i)]
-        df1['num_of_pendown'+str(i)] = df2['num_of_pendown'+str(i)]
-        df1['paper_time'+str(i)] = df2['paper_time'+str(i)]
-        df1['pressure_mean'+str(i)] = df2['pressure_mean'+str(i)]
-        df1['pressure_var'+str(i)] = df2['pressure_var'+str(i)]
-        df1['total_time'+str(i)] = df2['total_time'+str(i)]
-    else:
-        df1['air_time'+str(i)] = 0
-        df1['disp_index'+str(i)] = 0
-        df1['gmrt_in_air'+str(i)] = 0
-        df1['gmrt_on_paper'+str(i)] = 0
-        df1['max_x_extension'+str(i)] = 0
-        df1['max_y_extension'+str(i)] = 0
-        df1['mean_acc_in_air'+str(i)] = 0
-        df1['mean_acc_on_paper'+str(i)] = 0
-        df1['mean_gmrt'+str(i)] = 0
-        df1['mean_jerk_in_air'+str(i)] = 0
-        df1['mean_jerk_on_paper'+str(i)] = 0
-        df1['mean_speed_in_air'+str(i)] = 0
-        df1['mean_speed_on_paper'+str(i)] = 0
-        df1['num_of_pendown'+str(i)] = 0
-        df1['paper_time'+str(i)] = 0
-        df1['pressure_mean'+str(i)] = 0
-        df1['pressure_var'+str(i)] = 0
-        df1['total_time'+str(i)] = 0
+    desktop_dir = 'models/'
+    for i in range(1,26):
+        if i in tests:
+            df1['air_time'+str(i)] = df2['air_time'+str(i)]
+            df1['disp_index'+str(i)] = df2['disp_index'+str(i)]
+            df1['gmrt_in_air'+str(i)] = df2['gmrt_in_air'+str(i)]
+            df1['gmrt_on_paper'+str(i)] = df2['gmrt_on_paper'+str(i)]
+            df1['max_x_extension'+str(i)] = df2['max_x_extension'+str(i)]
+            df1['max_y_extension'+str(i)] = df2['max_y_extension'+str(i)]
+            df1['mean_acc_in_air'+str(i)] = df2['mean_acc_in_air'+str(i)]
+            df1['mean_acc_on_paper'+str(i)] = df2['mean_acc_on_paper'+str(i)]
+            df1['mean_gmrt'+str(i)] =  df2['mean_gmrt'+str(i)]
+            df1['mean_jerk_in_air'+str(i)] = df2['mean_jerk_in_air'+str(i)]
+            df1['mean_jerk_on_paper'+str(i)] = df2['mean_jerk_on_paper'+str(i)]
+            df1['mean_speed_in_air'+str(i)] = df2['mean_speed_in_air'+str(i)]
+            df1['mean_speed_on_paper'+str(i)] = df2['mean_speed_on_paper'+str(i)]
+            df1['num_of_pendown'+str(i)] = df2['num_of_pendown'+str(i)]
+            df1['paper_time'+str(i)] = df2['paper_time'+str(i)]
+            df1['pressure_mean'+str(i)] = df2['pressure_mean'+str(i)]
+            df1['pressure_var'+str(i)] = df2['pressure_var'+str(i)]
+            df1['total_time'+str(i)] = df2['total_time'+str(i)]
+        else:
+            df1['air_time'+str(i)] = 0
+            df1['disp_index'+str(i)] = 0
+            df1['gmrt_in_air'+str(i)] = 0
+            df1['gmrt_on_paper'+str(i)] = 0
+            df1['max_x_extension'+str(i)] = 0
+            df1['max_y_extension'+str(i)] = 0
+            df1['mean_acc_in_air'+str(i)] = 0
+            df1['mean_acc_on_paper'+str(i)] = 0
+            df1['mean_gmrt'+str(i)] = 0
+            df1['mean_jerk_in_air'+str(i)] = 0
+            df1['mean_jerk_on_paper'+str(i)] = 0
+            df1['mean_speed_in_air'+str(i)] = 0
+            df1['mean_speed_on_paper'+str(i)] = 0
+            df1['num_of_pendown'+str(i)] = 0
+            df1['paper_time'+str(i)] = 0
+            df1['pressure_mean'+str(i)] = 0
+            df1['pressure_var'+str(i)] = 0
+            df1['total_time'+str(i)] = 0
 
     for i in range(1,3):
         df1['air_time'+str(i)] = 0
@@ -74,11 +92,6 @@ def run_model(myframe):
         df1['pressure_mean'+str(i)] = 0
         df1['pressure_var'+str(i)] = 0
         df1['total_time'+str(i)] = 0
-
-'''tester = df1.iloc[:, 2 * cols_per_test:(2 + 1) * cols_per_test]
-tester = tester.loc(0)
-print(tester)
-tester.to_csv('/Users/aditya/Downloads/tester.csv', index=False)'''
         
     for i in tests:
         model_filename = f'model_test_{i}_KNN.pkl'
@@ -86,7 +99,7 @@ tester.to_csv('/Users/aditya/Downloads/tester.csv', index=False)'''
         with open(model_filepath, 'rb') as file:
             loaded_model = pickle.load(file)
         tester1 = df1.iloc[:, (i-1) * cols_per_test:(i) * cols_per_test].values.reshape(1,-1)
-        distance, index = neigh.kneighbors(tester1)
+        distance, index = loaded_model.kneighbors(tester1)
         true_val = df.iloc[[index[0][0]]]
         df1['gmrt_in_air'+str(i)] = true_val['gmrt_in_air'+str(i)].values[0]
         df1['mean_acc_in_air'+str(i)] = true_val['mean_acc_in_air'+str(i)].values[0]
@@ -96,6 +109,8 @@ tester.to_csv('/Users/aditya/Downloads/tester.csv', index=False)'''
         df1['mean_speed_in_air'+str(i)] = true_val['mean_speed_in_air'+str(i)].values[0]
         df1['pressure_var'+str(i)] = true_val['pressure_var'+str(i)].values[0]
         
+        true_val.to_csv('tester.csv', index=False)
+    df1.to_csv('updated_final_row_tests.csv', index=False)
         
     tests = [2,3,9,12,13,14,17,22]
     for j in range (1):

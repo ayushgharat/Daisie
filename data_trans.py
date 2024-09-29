@@ -41,6 +41,7 @@ def process_strokes_data(json_data):
         dfs.append(df)
 
     final_df = create_metrics_dataframe_for_all_tests(dfs, question_numbers)
+    final_df.to_csv('final.csv')
     return final_df
         
 def create_metrics_dataframe_for_all_tests(dfs, test_numbers):

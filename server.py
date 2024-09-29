@@ -7,7 +7,7 @@ app = Flask(__name__)
 def receive_data():
     data = request.json
     print(data)
-    return jsonify(message: "Data Recieved")
+    return jsonify(message="Data Recieved")
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ def receive_data():
 
 
         # Return the DataFrame as a CSV file
-        if(response == 0.0): 
+        if(int(response) == 0): 
             return jsonify({"result": "negative"})
         else:
             return jsonify({"result": "positive"})

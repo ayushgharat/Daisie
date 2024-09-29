@@ -16,11 +16,12 @@ def receive_data():
         # Process the strokes data using the function in app_logic.py
         final_df = process_strokes_data(data)
         response = run_model(final_df)
+        print("Final Score")
         print(response)
 
 
         # Return the DataFrame as a CSV file
-        if(response == 0.0): 
+        if(int(response) == 0): 
             return jsonify({"result": "negative"})
         else:
             return jsonify({"result": "positive"})

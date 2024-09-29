@@ -87,12 +87,13 @@ def interact_with_user(user_input, chat_history, model_output_alz, model_output_
     # Initialize LLM Chain
     template = ChatPromptTemplate.from_template(prompt)
     # chain_qa = LLMChain(llm=llm, prompt=template, output_key="answer")
-    chain_qa = prompt | llm
+    chain_qa = template | llm
 
     print(user_input)
 
     # Get the LLM response
-    result = chain_qa.invoke({"input": user_input})
+    # result = chain_qa.invoke({"input": user_input})
+    result = chain_qa.invoke(user_input)
     print(result)
     
     # Add AI response to chat history

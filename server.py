@@ -30,7 +30,7 @@ def receive_data():
         #         alzheimers_list.append(obj)
 
         for i in range(0, len(json_data)):
-            if json_data[i]["questionNo"] == 26:
+            if json_data[i]["questionNo"] == "26":
                 parkinson_object = json_data[i]
             else:
                 alzheimers_list.append(json_data[i])

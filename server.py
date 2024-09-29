@@ -60,6 +60,8 @@ def receive_data():
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
+
+    print(data)
     
     # Extract necessary information from the request
     user_input = data.get('user_input')

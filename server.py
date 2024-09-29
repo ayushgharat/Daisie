@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from data_trans import process_strokes_data
 from flask_cors import CORS
+import json
 from model_retrieval_alzheimer import run_model
 
 app = Flask(__name__)

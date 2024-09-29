@@ -45,8 +45,8 @@ def receive_data():
         final_df = process_strokes_data(alzheimers_list)
         response = run_model(final_df)
 
-        # park_response = park_model(json_data)
-        park_response = None
+        park_response = park_model(json_data)
+        # park_response = None
         print(park_response)
 
         # Return the DataFrame as a CSV file

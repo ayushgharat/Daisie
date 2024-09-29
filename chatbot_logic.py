@@ -35,7 +35,8 @@ with open('app_model_description.txt', 'r') as file:
 
 # Function to create chat history string
 def create_prompt(chat_history):
-    chat_history_str = "\n".join([f"{key}: {value}" for entry in chat_history for key, value in entry.items()])
+    # Format the chat history as "human: message" and "ai: message"
+    chat_history_str = "\n".join([f"{list(entry.keys())[0]}: {list(entry.values())[0]}" for entry in chat_history])
     return chat_history_str
 
 # Build the prompt with all the context and instructions
@@ -79,7 +80,7 @@ def build_prompt(chat_history, model_output_alz, model_output_park):
 # LLM Chain for interacting with the chatbot
 def interact_with_user(user_input, chat_history, model_output_alz, model_output_park):
     # Add user input to chat history
-    chat_history.append({"Human": user_input})
+    chat_history.append({"human": user_input})
 
     # Create prompt including the chat history and model outputs
     prompt = build_prompt(chat_history, model_output_alz, model_output_park)
@@ -87,16 +88,14 @@ def interact_with_user(user_input, chat_history, model_output_alz, model_output_
     # Initialize LLM Chain
     template = ChatPromptTemplate.from_template(prompt)
     chain_qa = LLMChain(llm=llm, prompt=template, output_key="answer")
-    #chain_qa = template | llm
 
     print(user_input)
 
     # Get the LLM response
     result = chain_qa.invoke({"input": user_input})
-    #result = chain_qa.invoke(user_input)
     print(result)
     
     # Add AI response to chat history
-    chat_history.append({"AI": result["answer"]})
+    chat_history.append({"ai": result["answer"]})
     
     return result["answer"]

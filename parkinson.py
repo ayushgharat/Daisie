@@ -33,7 +33,7 @@ def park_model(json_dat):
     plt.savefig('park_img.jpg', bbox_inches='tight', pad_inches=0,facecolor = 'white')
     
         # Show the plot
-    plt.show()
+    # plt.show()
     
     plt.close()
     

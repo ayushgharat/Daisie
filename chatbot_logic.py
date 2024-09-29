@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 
@@ -86,7 +86,8 @@ def interact_with_user(user_input, chat_history, model_output_alz, model_output_
 
     # Initialize LLM Chain
     template = ChatPromptTemplate.from_template(prompt)
-    chain_qa = LLMChain(llm=llm, prompt=template, output_key="answer")
+    # chain_qa = LLMChain(llm=llm, prompt=template, output_key="answer")
+    chain_qa = prompt | llm
 
     # Get the LLM response
     result = chain_qa.invoke({"input": user_input})

@@ -4,6 +4,7 @@ from flask_cors import CORS
 import json
 from model_retrieval_alzheimer import run_model
 from chatbot_logic import interact_with_user
+from parkinson import park_model
 
 app = Flask(__name__)
 CORS(app)
@@ -43,15 +44,16 @@ def receive_data():
         # Process the strokes data using the function in app_logic.py
         final_df = process_strokes_data(alzheimers_list)
         response = run_model(final_df)
-        print("Final Score")
-        print(response)
 
+        # park_response = park_model(json_data)
+        park_response = None
+        print(park_response)
 
         # Return the DataFrame as a CSV file
         if(int(response) == 0): 
-            return jsonify({"result": "negative"})
+            return jsonify({"alzheimer": "negative", "parkinson": park_response})
         else:
-            return jsonify({"result": "positive"})
+            return jsonify({"alzheimer": "positive", "parkinson": park_response})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -60,6 +62,8 @@ def receive_data():
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
+
+    print(data)
     
     # Extract necessary information from the request
     user_input = data.get('user_input')

@@ -3,7 +3,9 @@ import json
 import cv2
 import numpy as np
 import pickle
+import matplotlib
 
+matplotlib.use('Agg')
 def park_model(json_dat):
     json_data = json_dat
     for i in range(0,len(json_data)):
@@ -33,7 +35,6 @@ def park_model(json_dat):
     plt.savefig('park_img.jpg', bbox_inches='tight', pad_inches=0,facecolor = 'white')
     
         # Show the plot
-    # plt.show()
     
     plt.close()
     
@@ -53,6 +54,6 @@ def park_model(json_dat):
     ypred_healthy = model.predict(image_healthy)
     
     if np.argmax(ypred_healthy[0], axis=0) == 0:
-        return 'negative'
-    else:
         return 'positive'
+    else:
+        return 'negative'
